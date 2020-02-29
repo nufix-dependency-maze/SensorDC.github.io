@@ -20,18 +20,15 @@
     </p>
 
     <h2 id="Sensor-introduction">Sensor Introduction</h2>
-    <p class="textcontent">Modern software projects are often built on top of third-party libraries.
-        Dependency conflicts arise when the loaded versions of a project's libraries fail to cover or are incompatible with the required features referenced by the project.
-        Dependency conflicts need to be carefully checked and resolved to avoid runtime exceptions or unexpected program behaviors.
-        While existing compilers/linkers and static analyzers check the signature compatibility of the methods used in a project, they do not check the semantic compatibility of these methods and thus cannot catch semantic conflict issues caused by dependency conflicts.
-        This motivates us to develop a technique that automatically detects semantic conflict issues, Sensor, which
-        (1) performs static analysis to identify pairs of conflicting APIs;
-        and (2) synthesizes test code with the injected valid arguments to invoke these API pairs and compares their test outcomes to identify real semantic conflict issues.
-        Our evaluation results show that Sensor achieves a Precision of 0.803 and a Recall of 0.760 on open source projects and a Precision of 0.821 on industrial subjects.
-        Sensor has identified 146 real semantic conflict issues from 28 projects.
-        We merged these detected issues into 32 issue reports and submitted them to the developers of the corresponding projects.
-        So far, 25 reported issues have been confirmed by developers as real bugs, and 19 have been quickly fixed.
-        The results indicate the effectiveness and usefulness of our technique.
+    <p class="textcontent">Java projects are often built on top of various third-party libraries. 
+    	If multiple versions of a library exist on the classpath, Java classloader will only load one version and shadow the others. 
+    	This gives rise to semantic conflict issues, which occur when a project references library APIs with identical method signatures but inconsistent behaviors across multiple library versions. 
+    	Such issues are common. We studied 1,654 popular Java projects and found that 73% of them contain conflicting library versions, which may lead to semantic conflict issues. 
+    	However, existing techniques only check for syntactic issues caused by incompatible method signatures rather than semantic issues caused by inconsistent API behaviors across library versions. 
+    	This motivates us to develop an automated technique, Sensor, to detect semantic conflict issues for Java projects. 
+    	Given a project to analyze, Sensor synthesizes test cases using ingredients from the project in order to trigger calls to the APIs that have undergone implementation changes. 
+    	It then executes the test cases to test the project using multiple versions of the concerned libraries and compares the test outcomes to identify potential semantic conflict issues. 
+    	Our evaluation results show that Sensor is effective and useful: it achieves a Precision of 0.803 and a Recall of 0.760 on open-source projects and a Precision of 0.821 on industrial projects; it has detected 151 semantic conflict issues in 30 projects, 79.4% of which have been confirmed as real bugs.
     </p>
 
     <h2 id="Sensor-report">Assessment Report of Sensor</h2>
@@ -46,7 +43,6 @@
             <td>Project</td>
             <td>Star</td>
             <td>Issue report ID</td>
-            <td>Pattern</td>
             <td>#SC issue</td>
             <td>Status</td>
         </tr>
@@ -55,7 +51,6 @@
             <td>Htm.java</td>
             <td>296</td>
             <td><a href="https://github.com/numenta/htm.java/issues/550">#550</a></td>
-            <td>A.a</td>
             <td>1</td>
             <td>Pending</td>
         </tr>
@@ -64,7 +59,6 @@
             <td>EasyTransaction</td>
             <td>2k</td>
             <td><a href="https://github.com/QNJR-GROUP/EasyTransaction/issues/144">#144</a></td>
-            <td>A.a</td>
             <td>1</td>
             <td>Pending</td>
         </tr>
@@ -73,7 +67,6 @@
             <td>FastBootWeixin</td>
             <td>603</td>
             <td><a href="https://github.com/FastBootWeixin/FastBootWeixin/issues/20">#20</a></td>
-            <td>A.a</td>
             <td>1</td>
             <td>Pending</td>
         </tr>
@@ -82,7 +75,6 @@
             <td>Hydra</td>
             <td>83</td>
             <td><a href="https://github.com/Findwise/Hydra/issues/364">#364</a></td>
-            <td>A.a</td>
             <td>1</td>
             <td>Confirmed</td>
         </tr>
@@ -91,7 +83,6 @@
             <td>Motan</td>
             <td>5.4k</td>
             <td><a href="https://github.com/weibocom/motan/issues/800">#800</a></td>
-            <td>A.a</td>
             <td>15</td>
             <td>Fixed</td>
         </tr>
@@ -100,7 +91,6 @@
             <td>Restx</td>
             <td>434</td>
             <td><a href="https://github.com/restx/restx/issues/297">#297</a></td>
-            <td>A.a</td>
             <td>3</td>
             <td>Fixed</td>
         </tr>
@@ -109,7 +99,6 @@
             <td>Netty-rest</td>
             <td>89</td>
             <td><a href="https://github.com/buremba/netty-rest/issues/8">#8</a></td>
-            <td>A.a</td>
             <td>12</td>
             <td>Fixed</td>
         </tr>
@@ -118,7 +107,6 @@
             <td>Netty-rest</td>
             <td>89</td>
             <td><a href="https://github.com/buremba/netty-rest/issues/9">#9</a></td>
-            <td>A.a</td>
             <td>9</td>
             <td>Fixed</td>
         </tr>
@@ -127,7 +115,6 @@
             <td>Ff4j</td>
             <td>701</td>
             <td><a href="https://github.com/ff4j/ff4j/issues/336">#336</a></td>
-            <td>A.a</td>
             <td>10</td>
             <td>Fixed</td>
         </tr>
@@ -136,7 +123,6 @@
             <td>Aws-sdk-java</td>
             <td>3.2k</td>
             <td><a href="https://github.com/aws/aws-sdk-java/issues/1897">#1897</a></td>
-            <td>A.a</td>
             <td>1</td>
             <td>False positive</td>
         </tr>
@@ -145,7 +131,6 @@
             <td>Retrofit</td>
             <td>34.8k</td>
             <td><a href="https://github.com/square/retrofit/issues/3018">#3018</a></td>
-            <td>A.a</td>
             <td>12</td>
             <td>Fixed</td>
         </tr>
@@ -154,7 +139,6 @@
             <td>Guagua</td>
             <td>72</td>
             <td><a href="https://github.com/ShifuML/guagua/issues/103">#103</a></td>
-            <td>A.a</td>
             <td>19</td>
             <td>Fixed</td>
         </tr>
@@ -163,7 +147,6 @@
             <td>Jss7</td>
             <td>104</td>
             <td><a href="https://github.com/RestComm/jss7/issues/309">#309</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Pending</td>
         </tr>
@@ -172,7 +155,6 @@
             <td>Product-iots</td>
             <td>120</td>
             <td><a href="https://github.com/wso2/product-iots/issues/1911">#1911</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Pending</td>
         </tr>
@@ -181,7 +163,6 @@
             <td>Cloud-opensource-java</td>
             <td>33</td>
             <td><a href="https://github.com/GoogleCloudPlatform/cloud-opensource-java/issues/559">#559</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Confirmed</td>
         </tr>
@@ -190,7 +171,6 @@
             <td>Atom-hopper</td>
             <td>58</td>
             <td><a href="https://github.com/rackerlabs/atom-hopper/issues/301">#301</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Fixed</td>
         </tr>
@@ -199,7 +179,6 @@
             <td>Quick-media</td>
             <td>441</td>
             <td><a href="https://github.com/liuyueyi/quick-media/issues/41">#41</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Fixed</td>
         </tr>
@@ -208,7 +187,6 @@
             <td>Ontop</td>
             <td>325</td>
             <td><a href="https://github.com/ontop/ontop/issues/287">#287</a></td>
-            <td>A.b</td>
             <td>12</td>
             <td>Fixed</td>
         </tr>
@@ -217,7 +195,6 @@
             <td>Ontop</td>
             <td>325</td>
             <td><a href="https://github.com/ontop/ontop/issues/288">#288</a></td>
-            <td>A.b</td>
             <td>17</td>
             <td>Fixed</td>
         </tr>
@@ -226,7 +203,6 @@
             <td>Odo</td>
             <td>141</td>
             <td><a href="https://github.com/groupon/odo/issues/173">#173</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Fixed</td>
         </tr>
@@ -235,7 +211,6 @@
             <td>Java-design-patterns</td>
             <td>55.2k</td>
             <td><a href="https://github.com/iluwatar/java-design-patterns/issues/868">#868</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Fixed</td>
         </tr>
@@ -244,7 +219,6 @@
             <td>Hmily</td>
             <td>2.7k</td>
             <td><a href="https://github.com/Dromara/hmily/issues/86">#86</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Fixed</td>
         </tr>
@@ -253,7 +227,6 @@
             <td>Ninja</td>
             <td>1.9k</td>
             <td><a href="https://github.com/ninjaframework/ninja/issues/654">#654</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Fixed</td>
         </tr>
@@ -262,7 +235,6 @@
             <td>Motan</td>
             <td>5.4k</td>
             <td><a href="https://github.com/weibocom/motan/issues/809">#809</a></td>
-            <td>A.b</td>
             <td>15</td>
             <td>Fixed</td>
         </tr>
@@ -271,7 +243,6 @@
             <td>Openstack-java-sdk</td>
             <td>177</td>
             <td><a href="https://github.com/woorea/openstack-java-sdk/issues/214">#214</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>Fixed</td>
         </tr>
@@ -280,7 +251,6 @@
             <td>Javacpp</td>
             <td>3k</td>
             <td><a href="https://github.com/bytedeco/javacpp/issues/295">#295</a></td>
-            <td>A.b</td>
             <td>1</td>
             <td>False positive</td>
         </tr>
@@ -289,7 +259,6 @@
             <td>MiA</td>
             <td>342</td>
             <td><a href="https://github.com/tdunning/MiA/issues/11">#11</a></td>
-            <td>B</td>
             <td>1</td>
             <td>Confirmed</td>
         </tr>
@@ -298,7 +267,6 @@
             <td>Vertx-examples</td>
             <td>2.6k</td>
             <td><a href="https://github.com/vert-x3/vertx-examples/issues/335">#335</a></td>
-            <td>B</td>
             <td>1</td>
             <td>Confirmed</td>
         </tr>
@@ -307,7 +275,6 @@
             <td>Vertx-examples</td>
             <td>2.6k</td>
             <td><a href="https://github.com/vert-x3/vertx-examples/issues/336">#336</a></td>
-            <td>B</td>
             <td>1</td>
             <td>Confirmed</td>
         </tr>
@@ -316,7 +283,6 @@
             <td>Rest-assured</td>
             <td>4.5k</td>
             <td><a href="https://github.com/rest-assured/rest-assured/issues/1143">#1143</a></td>
-            <td>B</td>
             <td>1</td>
             <td>Confirmed</td>
         </tr>
@@ -325,7 +291,6 @@
             <td>Yawp</td>
             <td>137</td>
             <td><a href="https://github.com/feroult/yawp/issues/121">#121</a></td>
-            <td>B</td>
             <td>1</td>
             <td>Confirmed</td>
         </tr>
@@ -334,9 +299,24 @@
             <td>Apache/Hive</td>
             <td>3k</td>
             <td><a href="https://issues.apache.org/jira/browse/HIVE-21374">#21374</a></td>
-            <td>B</td>
             <td>1</td>
-            <td>Confirmed</td>
+            <td>Fixed</td>
+        </tr>
+        <tr>
+        	<td>33</td>
+        	<td>Weixin-java-demo-springmvc</td>
+        	<td>333</td>
+        	<td><a href="https://github.com/Wechat-Group/weixin-java-demo-springmvc/issues/17">#17</a></td>
+        	<td>3</td>
+        	<td>Fixed</td>
+        </tr>
+        <tr>
+        	<td>34</td>
+        	<td>Nutzboot</td>
+        	<td>342</td>
+        	<td><a href="https://github.com/nutzam/nutzboot/issues/199">#199</a></td>
+        	<td>2</td>
+        	<td>Fixed</td>
         </tr>
 
 
